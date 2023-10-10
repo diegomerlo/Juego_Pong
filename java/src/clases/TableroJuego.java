@@ -6,11 +6,17 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 
 public class TableroJuego extends JPanel {
+	
     private Pelota pelota = new Pelota(0, 0);
     private Raqueta r1 = new Raqueta(20, 200); // Corrige el orden de ancho y alto
 
@@ -27,16 +33,28 @@ public class TableroJuego extends JPanel {
         Image image = icon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         lblNewLabel.setIcon(new ImageIcon(image));
         lblNewLabel.setBounds(700, 5, 40, 40);
-        
         vidaLabel = new JLabel();
         vidaLabel.setBounds(750, 5, 40, 40);
+        
+        addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                inicializarPelota(getWidth(), getHeight());
+            }
+        });
+        
         add(vidaLabel);
-        
-        
         add(lblNewLabel);
         
         
     }
+    
+    private void inicializarPelota(int maxX, int maxY) {
+        Random random = new Random();
+        int x = random.nextInt(maxX - Pelota.DIAMETRO);
+        int y = random.nextInt(maxY - Pelota.DIAMETRO);
+        pelota = new Pelota(x, y);
+    }
+    
     public void actualizarVidaLabel() {
         vidaLabel.setText(String.valueOf(pelota.getVidaCount()));
     }

@@ -1,6 +1,7 @@
 package clases;
 
 import java.awt.geom.Ellipse2D;
+import java.util.Random;
 
 public class Pelota {
 
@@ -9,7 +10,7 @@ public class Pelota {
     private int dx = 1;
     private int dy = 1;
     private int vida_count = 3;
-    private final int DIAMETRO = 15; // Diámetro de la pelota
+    public static final int DIAMETRO = 15; // Diámetro de la pelota
 
     public Pelota(int x, int y) {
         this.x = x;
@@ -34,15 +35,21 @@ public class Pelota {
         y += dy;
 
         if (x < 0) {
-            System.out.println("Toco el borde");
             vida_count--;
             x = 0;
             dx = -dx;
         } else if (x > maxX - DIAMETRO) {
-            System.out.println("Toco el borde");
-            vida_count--;
+
             x = maxX - DIAMETRO;
             dx = -dx;
+        }
+        
+        if(vida_count==0) {
+        	
+        	//Aca debería llamar a PanelBotones y dar la opcion de los dos botones
+        	
+        	System.exit(0);
+        	
         }
 
         if (colision1) {
