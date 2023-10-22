@@ -6,6 +6,8 @@ public class Hilo extends Thread {
 	
 	TableroJuego lamina;
 	
+	public static double tiempo;
+	
 	public Hilo(TableroJuego lamina) {
 		this.lamina=lamina;
 	}
@@ -15,7 +17,8 @@ public class Hilo extends Thread {
 		while(true) {
 			
 			try {
-				Thread.sleep(1);
+				Thread.sleep((long) tiempo);
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -25,6 +28,14 @@ public class Hilo extends Thread {
 			lamina.repaint();
 			
 		}
+	}
+	
+	public static boolean tiempo_modificador(boolean tempo) {
+		
+		tiempo = tiempo;
+		
+		return tempo;
+		
 	}
 	
 	

@@ -13,6 +13,10 @@ public class Raqueta {
         this.y = y;
     }
 
+    public static int valorAncho() {
+    	
+    	return ANCHO;
+    }
     public Rectangle2D getRaqueta() {
         return new Rectangle2D.Double(x, y, ANCHO, ALTO);
     }
