@@ -59,6 +59,8 @@ public class TableroJuego extends JPanel {
     private int bloqueAncho = 20;
     private int bloqueAlto = 50; 
     private int espacioEntreBloques = 10; 
+    private int ANCHO = 800;
+    private int ALTO = 500;
 
 
     public TableroJuego() {
@@ -76,21 +78,24 @@ public class TableroJuego extends JPanel {
         );
         
         if(dificultad==0) {
-        	numFilas=1;
+        	numFilas=5;
         	numColumnas=1;
         	vidas=3;
+        	Pelota.vida_count=vidas;
         	Hilo.tiempo=2;
         }
         if(dificultad==1) {
-        	numFilas=2;
-        	numColumnas=1;
+        	numFilas=5;
+        	numColumnas=2;
         	vidas=2;
+        	Pelota.vida_count=vidas;
         	Hilo.tiempo=1.8;
         }
         if(dificultad==2) {
-        	numFilas=3;
-        	numColumnas=1;
-        	vidas=3;
+        	numFilas=5;
+        	numColumnas=3;
+        	vidas=1;
+        	Pelota.vida_count=vidas;
         	Hilo.tiempo=1.3;
         }
         
@@ -224,10 +229,8 @@ public class TableroJuego extends JPanel {
         ImageIcon ScaledimgToIcon = new ImageIcon(Scaledimg);
         fondoimagen = ScaledimgToIcon.getImage();
         
-        Random random = new Random();
-        int anchoPantalla = random.nextInt(800); // Genera una posición x aleatoria entre 0 y 799
-        int altoPantalla = random.nextInt(400);
-        inicializarBloques(anchoPantalla,altoPantalla);
+      
+        inicializarBloques();
         
         
         
@@ -236,14 +239,24 @@ public class TableroJuego extends JPanel {
     
     
     
-    private void inicializarBloques(int anchoPantalla, int altoPantalla) {
+    private void inicializarBloques() {
         bloques = new ArrayList<>();
-        Random random = new Random();
-
+        
+        int separacionX = 40;
+        int separacionY = 60;
+        
+        int valorX = (separacionX*numColumnas);
+        valorX = ANCHO - valorX;
+        
+        int valorY = (separacionY*numFilas);
+        valorY = ALTO - valorY;
+        
+        valorY=valorY/2;
+        
         for (int fila = 0; fila < numFilas; fila++) {
             for (int columna = 0; columna < numColumnas; columna++) {
-                int x = random.nextInt(anchoPantalla - bloqueAncho); // Generar posición x aleatoria
-                int y = random.nextInt(altoPantalla - bloqueAlto);
+                int x = valorX + (separacionX * columna);
+                int y = valorY + (separacionY * fila); 
 
                 bloques bloque = new bloques(x, y, bloqueAncho, bloqueAlto);
                 pelota.agregarBloque(bloque);
@@ -325,7 +338,7 @@ public class TableroJuego extends JPanel {
     
     public void actualizarVidaLabel() {
         
-        if(pelota.getVidaCount()<3) {
+        if(pelota.getVidaCount()<vidas) {
         	
         	corazones[pelota.getVidaCount()].setVisible(false);
         	

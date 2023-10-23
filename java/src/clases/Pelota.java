@@ -11,7 +11,7 @@ public class Pelota {
     private int y;
     private int dx = 1;
     private int dy = 1;
-    private int vida_count = 3;
+    public static int vida_count;
     private int score = 0;
     
     private List<bloques> bloques = new ArrayList<>();
